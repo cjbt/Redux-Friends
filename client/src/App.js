@@ -4,7 +4,7 @@ import './styles/App.scss';
 import { getFriends } from './store/actions';
 import { Route } from 'react-router-dom';
 
-import Home from './containers/Home/Home';
+import { Home } from './containers/Home/';
 
 class App extends Component {
   componentDidMount() {
