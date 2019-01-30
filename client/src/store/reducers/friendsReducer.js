@@ -1,7 +1,17 @@
-import { GET_FRIENDS, POST_FRIENDS } from '../actions/types';
+import {
+  GET_FRIENDS,
+  POST_FRIENDS,
+  UPDATE_FRIENDS,
+  POPULATE_FRIENDS
+} from '../actions/types';
 
 const initialState = {
-  friends: []
+  friends: [],
+  name: '',
+  age: '',
+  email: '',
+  beingUpdated: null,
+  isUpdating: false
 };
 
 const friends = (state = initialState, action) => {
@@ -9,11 +19,33 @@ const friends = (state = initialState, action) => {
     case GET_FRIENDS:
       console.log(action);
       return {
+        ...state,
         friends: action.payload
       };
     case POST_FRIENDS:
       return {
+        ...state,
         friends: action.payload
+      };
+    case POPULATE_FRIENDS:
+      let selected = state.friends.find(friend => friend.id === action.payload);
+      return {
+        ...state,
+        name: selected.name,
+        age: selected.age,
+        email: selected.email,
+        beingUpdated: selected.id,
+        isUpdating: true
+      };
+    case UPDATE_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload,
+        name: '',
+        age: '',
+        email: '',
+        beingUpdated: null,
+        isUpdating: false
       };
 
     default:
