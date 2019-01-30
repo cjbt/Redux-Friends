@@ -4,7 +4,8 @@ import './styles/App.scss';
 import { getFriends } from './store/actions';
 import { Route } from 'react-router-dom';
 
-import { Home } from './containers/Home/';
+import { Home, FriendsList, FriendForm } from './containers';
+import {FriendCard} from './components'
 
 class App extends Component {
   componentDidMount() {
@@ -16,6 +17,9 @@ class App extends Component {
     return (
       <>
         <Route exact path='/' component={Home} />
+        <Route path='/friends' component={FriendsList} />
+        <Route path='/friend-add' component={FriendForm} />
+        <Route path='/friend/:id' component={FriendCard} />
       </>
     );
   }
