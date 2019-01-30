@@ -3,7 +3,8 @@ import {
   GET_FRIENDS,
   POST_FRIENDS,
   UPDATE_FRIENDS,
-  POPULATE_FRIENDS
+  POPULATE_FRIENDS,
+  DELETE_FRIEND
 } from './types';
 
 const url = 'http://localhost:5000/api/friends';
@@ -24,6 +25,18 @@ export const postFriends = (name, age, email) => dispatch => {
       payload: res.data
     })
   );
+};
+
+export const deleteFriend = id => dispatch => {
+  return axios
+    .delete(`${url}/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_FRIEND,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err));
 };
 
 export const populateFriends = id => {

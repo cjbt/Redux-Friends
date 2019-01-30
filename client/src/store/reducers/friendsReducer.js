@@ -2,7 +2,8 @@ import {
   GET_FRIENDS,
   POST_FRIENDS,
   UPDATE_FRIENDS,
-  POPULATE_FRIENDS
+  POPULATE_FRIENDS,
+  DELETE_FRIEND
 } from '../actions/types';
 
 const initialState = {
@@ -23,6 +24,11 @@ const friends = (state = initialState, action) => {
         friends: action.payload
       };
     case POST_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload
+      };
+    case DELETE_FRIEND:
       return {
         ...state,
         friends: action.payload
