@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       <Link to='/friends'>
-        <h1>sup</h1>
+        <h1>My Friends List</h1>
       </Link>
     </div>
   );
