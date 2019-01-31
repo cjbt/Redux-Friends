@@ -4,27 +4,42 @@ import {
   POST_FRIENDS,
   UPDATE_FRIENDS,
   POPULATE_FRIENDS,
-  DELETE_FRIEND
+  DELETE_FRIEND,
+  GET_FRIENDs_START,
+  HANDLE_CHANGE
 } from './types';
 
 const url = 'http://localhost:5000/api/friends';
 export const getFriends = () => dispatch => {
-  return axios.get(url).then(res => {
-    console.log(res.data);
-    dispatch({
-      type: GET_FRIENDS,
-      payload: res.data
-    });
+  dispatch({
+    type: GET_FRIENDs_START,
+    payload: true
   });
+  return axios
+    .get(url)
+    .then(res => {
+      console.log(res.data);
+      dispatch({
+        type: GET_FRIENDS,
+        payload: {
+          data: res.data,
+          isLoading: false
+        }
+      });
+    })
+    .catch(err => console.log(err));
 };
 
-export const postFriends = (name, age, email) => dispatch => {
-  return axios.post(url, { name, age, email }).then(res =>
-    dispatch({
-      type: POST_FRIENDS,
-      payload: res.data
-    })
-  );
+export const postFriend = (name, age, email) => dispatch => {
+  return axios
+    .post(url, { name, age, email })
+    .then(res =>
+      dispatch({
+        type: POST_FRIENDS,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err));
 };
 
 export const deleteFriend = id => dispatch => {
@@ -46,10 +61,10 @@ export const populateFriends = id => {
   };
 };
 
-export const updateFriends = (id, name, age, email) => dispatch => {
-  return axios
+export const updateFriend = (id, name, age, email) => dispatch => {
+  axios
     .put(`${url}/${id}`, { name, age, email })
-    .next(res =>
+    .then(res =>
       dispatch({
         type: UPDATE_FRIENDS,
         payload: res.data
@@ -57,5 +72,13 @@ export const updateFriends = (id, name, age, email) => dispatch => {
     )
     .catch(err => console.log(err));
 };
+
+export const handleChange = (name, value) => ({
+  type: HANDLE_CHANGE,
+  payload: {
+    name,
+    value
+  }
+});
 
 //9Saesh0NF16dgggCVHZgNTZMumY37Ldj2vZ9ulE4

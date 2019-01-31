@@ -3,7 +3,9 @@ import {
   POST_FRIENDS,
   UPDATE_FRIENDS,
   POPULATE_FRIENDS,
-  DELETE_FRIEND
+  DELETE_FRIEND,
+  GET_FRIENDs_START,
+  HANDLE_CHANGE
 } from '../actions/types';
 
 const initialState = {
@@ -12,21 +14,31 @@ const initialState = {
   age: '',
   email: '',
   beingUpdated: null,
-  isUpdating: false
+  isUpdating: false,
+  isLoading: false
 };
 
 const friends = (state = initialState, action) => {
   switch (action.type) {
+    case GET_FRIENDs_START:
+      return {
+        ...state,
+        isLoading: action.payload
+      };
     case GET_FRIENDS:
       console.log(action);
       return {
         ...state,
-        friends: action.payload
+        friends: action.payload.data,
+        isLoading: action.payload.isLoading
       };
     case POST_FRIENDS:
       return {
         ...state,
-        friends: action.payload
+        friends: action.payload,
+        name: '',
+        age: '',
+        email: ''
       };
     case DELETE_FRIEND:
       return {
@@ -52,6 +64,11 @@ const friends = (state = initialState, action) => {
         email: '',
         beingUpdated: null,
         isUpdating: false
+      };
+    case HANDLE_CHANGE:
+      return {
+        ...state,
+        [action.payload.name]: action.payload.value
       };
 
     default:
